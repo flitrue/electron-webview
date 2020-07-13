@@ -12,6 +12,7 @@ webview.addEventListener("new-window", (e) => {
   }
 });
 
-webview.addEventListener('dom-ready', () => {
-  webview.openDevTools()
-})
+// 开启webview调试窗口
+// webview.addEventListener('dom-ready', () => {
+//   webview.openDevTools()
+// })
