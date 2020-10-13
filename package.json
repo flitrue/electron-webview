@@ -13,21 +13,29 @@
   "author": "flitrue",
   "license": "MIT",
   "devDependencies": {
+    "devtron": "^1.4.0",
     "electron": "^9.1.0",
     "electron-builder": "^22.7.0"
   },
   "build": {
     "appId": "com.pxwx.mac",
     "mac": {
-      "target": ["dmg", "pkg", "zip"],
+      "target": [
+        "dmg",
+        "pkg",
+        "zip"
+      ],
       "identity": "",
-      "type": "distribution", 
+      "type": "distribution",
       "icon": "",
       "background": "",
       "sign": true
     },
     "win": {
-      "target": ["nsis", "zip"],
+      "target": [
+        "nsis",
+        "zip"
+      ],
       "icon": ""
     }
   }
