@@ -1,0 +1,59 @@
+diff --git a/node_modules/devtron/api.js b/node_modules/devtron/api.js
+index 3cdabe2..2ae6ff5 100644
+--- a/node_modules/devtron/api.js
++++ b/node_modules/devtron/api.js
+@@ -3,14 +3,14 @@ const electron = require('electron')
+ exports.install = () => {
+   if (process.type === 'renderer') {
+     console.log(`Installing Devtron from ${__dirname}`)
+-    if (electron.remote.BrowserWindow.getDevToolsExtensions &&
+-        electron.remote.BrowserWindow.getDevToolsExtensions().devtron) return true
+-    return electron.remote.BrowserWindow.addDevToolsExtension(__dirname)
++    if (electron.session.defaultSession.getAllExtensions &&
++        electron.session.defaultSession.getAllExtensions().devtron) return true
++    return electron.session.defaultSession.loadExtension(__dirname)
+   } else if (process.type === 'browser') {
+     console.log(`Installing Devtron from ${__dirname}`)
+-    if (electron.BrowserWindow.getDevToolsExtensions &&
+-        electron.BrowserWindow.getDevToolsExtensions().devtron) return true
+-    return electron.BrowserWindow.addDevToolsExtension(__dirname)
++    if (electron.session.defaultSession.getAllExtensions &&
++        electron.session.defaultSession.getAllExtensions().devtron) return true
++    return electron.session.defaultSession.loadExtension(__dirname)
+   } else {
+     throw new Error('Devtron can only be installed from an Electron process.')
+   }
+@@ -19,10 +19,10 @@ exports.install = () => {
+ exports.uninstall = () => {
+   if (process.type === 'renderer') {
+     console.log(`Uninstalling Devtron from ${__dirname}`)
+-    return electron.remote.BrowserWindow.removeDevToolsExtension('devtron')
++    return electron.remote.defaultSession.removeExtension('devtron')
+   } else if (process.type === 'browser') {
+     console.log(`Uninstalling Devtron from ${__dirname}`)
+-    return electron.BrowserWindow.removeDevToolsExtension('devtron')
++    return electron.session.defaultSession.removeExtension('devtron')
+   } else {
+     throw new Error('Devtron can only be uninstalled from an Electron process.')
+   }
+diff --git a/node_modules/devtron/manifest.json b/node_modules/devtron/manifest.json
+index 24613a4..2eeb662 100644
+--- a/node_modules/devtron/manifest.json
++++ b/node_modules/devtron/manifest.json
+@@ -1,11 +1,13 @@
+ {
+   "name": "devtron",
+   "version": "1.0",
++  "manifest_version": 2,
+   "devtools_page": "static/devtron.html",
+   "content_scripts": [
+     {
+-      "matches": ["*"],
++      "matches": ["<all_urls>"],
+       "js": ["out/browser-globals.js"]
+     }
+-  ]
++  ],
++  "content_security_policy": "script-src 'self' 'sha256-oUhBdPf7Ru2sGu4k6v1SmxAkpoPTuzvsLrUqElYwDRE='; object-src 'self'"
+ }
+\ No newline at end of file
