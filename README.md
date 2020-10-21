@@ -1,5 +1,7 @@
 # electron-quick-start
 
+> 该项目整合了devtron
+
 **Clone and run for a quick way to see Electron in action.**
 
 This is a minimal Electron application based on the [Quick Start Guide](https://electronjs.org/docs/tutorial/quick-start) within the Electron documentation.
